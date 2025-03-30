@@ -5,7 +5,7 @@
 
 数据项位置：
 ```
-计算机\HKEY_LOCAL_MACHINE\SOFTWARE\ChmlFrp
+计算机\HKEY_CURRENT_USER\Software\ChmlFrp
 ```
 
 
