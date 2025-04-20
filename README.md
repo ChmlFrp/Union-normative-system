@@ -17,28 +17,27 @@
 
 ## 2.示例代码
 ```csharp
+using Microsoft.Win32;
+
 public abstract class User
 {
-     public static string Username;
-     public static string Password;
-     public static string Usertoken;
+    private static readonly RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
+    public static string Username;
+    public static string Password;
+    public static string Usertoken;
 
-     public static void Load()
-     {
-        var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\ChmlFrp");
-        if (key == null) return;
-        Username = key.GetValue("username")?.ToString();
-        Password = key.GetValue("password")?.ToString();
-        Usertoken = key.GetValue("usertoken")?.ToString();
-     }
+    public static void Load()
+    {
+        Username = Key.GetValue("username")?.ToString();
+        Password = Key.GetValue("password")?.ToString();
+        Usertoken = Key.GetValue("usertoken")?.ToString();
+    }
 
-     public static void Save(string username, string password, string usertoken)
-     {
-        var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
-        if (key == null) return;
-        key.SetValue("username", username);
-        key.SetValue("password", password);
-        key.SetValue("usertoken", usertoken);
+    public static void Save(string username, string password, string usertoken)
+    {
+        Key.SetValue("username", username);
+        Key.SetValue("password", password);
+        Key.SetValue("usertoken", usertoken);
         Load();
     }
 }
