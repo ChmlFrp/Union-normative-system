@@ -44,5 +44,35 @@ public abstract class User
 ```
 
 ```python
-暂无Python代码
+import winreg
+
+
+class User:
+    # 打开或创建注册表键
+    key_path = r"SOFTWARE\ChmlFrp"
+    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path)
+
+    username = None
+    password = None
+    usertoken = None
+
+    @staticmethod
+    def load():
+        try:
+            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, User.key_path) as key:
+                User.username = winreg.QueryValueEx(key, "username")[0]
+                User.password = winreg.QueryValueEx(key, "password")[0]
+                User.usertoken = winreg.QueryValueEx(key, "usertoken")[0]
+        except FileNotFoundError:
+            User.username = None
+            User.password = None
+            User.usertoken = None
+
+    @staticmethod
+    def save(username, password, usertoken):
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, User.key_path, 0, winreg.KEY_WRITE) as key:
+            winreg.SetValueEx(key, "username", 0, winreg.REG_SZ, username)
+            winreg.SetValueEx(key, "password", 0, winreg.REG_SZ, password)
+            winreg.SetValueEx(key, "usertoken", 0, winreg.REG_SZ, usertoken)
+        User.load()
 ```
