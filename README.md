@@ -14,3 +14,36 @@
 | password  | 字符串值  | 用户密码  |
 | username  | 字符串值  | 用户名  |
 | usertoken  | 字符串值  | 用户token  |
+
+## 2.示例代码
+```csharp
+public abstract class User
+{
+     public static string Username;
+     public static string Password;
+     public static string Usertoken;
+
+     public static void Load()
+     {
+        var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\\ChmlFrp");
+        if (key == null) return;
+        Username = key.GetValue("username")?.ToString();
+        Password = key.GetValue("password")?.ToString();
+        Usertoken = key.GetValue("usertoken")?.ToString();
+     }
+
+     public static void Save(string username, string password, string usertoken)
+     {
+        var key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
+        if (key == null) return;
+        key.SetValue("username", username);
+        key.SetValue("password", password);
+        key.SetValue("usertoken", usertoken);
+        Load();
+    }
+}
+```
+
+```python
+暂无Python代码
+```
