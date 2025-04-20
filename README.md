@@ -16,39 +16,11 @@
 | usertoken  | 字符串值  | 用户token  |
 
 ## 2.示例代码
-```csharp
-using Microsoft.Win32;
-
-public abstract class User
-{
-    private static readonly RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
-    public static string Username;
-    public static string Password;
-    public static string Usertoken;
-
-    public static void Load()
-    {
-        Username = Key.GetValue("username")?.ToString();
-        Password = Key.GetValue("password")?.ToString();
-        Usertoken = Key.GetValue("usertoken")?.ToString();
-    }
-
-    public static void Save(string username, string password, string usertoken)
-    {
-        Key.SetValue("username", username);
-        Key.SetValue("password", password);
-        Key.SetValue("usertoken", usertoken);
-        Load();
-    }
-}
-```
 
 ```python
 import winreg
 
-
 class User:
-    # 打开或创建注册表键
     key_path = r"SOFTWARE\ChmlFrp"
     key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path)
 
@@ -75,4 +47,31 @@ class User:
             winreg.SetValueEx(key, "password", 0, winreg.REG_SZ, password)
             winreg.SetValueEx(key, "usertoken", 0, winreg.REG_SZ, usertoken)
         User.load()
+```
+
+```csharp
+using Microsoft.Win32;
+
+public abstract class User
+{
+    private static readonly RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
+    public static string Username;
+    public static string Password;
+    public static string Usertoken;
+
+    public static void Load()
+    {
+        Username = Key.GetValue("username")?.ToString();
+        Password = Key.GetValue("password")?.ToString();
+        Usertoken = Key.GetValue("usertoken")?.ToString();
+    }
+
+    public static void Save(string username, string password, string usertoken)
+    {
+        Key.SetValue("username", username);
+        Key.SetValue("password", password);
+        Key.SetValue("usertoken", usertoken);
+        Load();
+    }
+}
 ```
