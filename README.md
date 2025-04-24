@@ -54,7 +54,8 @@ using Microsoft.Win32;
 
 public abstract class User
 {
-    private static readonly RegistryKey Key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
+    private static readonly RegistryKey Key =
+       Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
     public static string Username;
     public static string Password;
     public static string Usertoken;
