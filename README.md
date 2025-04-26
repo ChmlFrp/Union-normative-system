@@ -65,15 +65,20 @@ class User:
 ```csharp
 using Microsoft.Win32;
 
-public abstract class User
+public static class User
 {
     private static readonly RegistryKey Key =
-       Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
+        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
     public static string Username;
     public static string Password;
     public static string Usertoken;
 
-    public static void Load()
+    static User()
+    {
+        Load();
+    }
+
+    private static void Load()
     {
         Username = Key.GetValue("username")?.ToString();
         Password = Key.GetValue("password")?.ToString();
