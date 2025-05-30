@@ -114,32 +114,8 @@ C:\Users\[用户名]\AppData\Roaming\ChmlFrp
 文件树：
 ```
 ├───ChmlFrp
-│   ├───Debug-[启动器缩写].logs
+│   ├───Debug-[启动器缩写].log
 │   ├───frpc.exe
-│   ├───Inis
-│   │  [隧道名].ini
-│   │
-│   ├───Logs
-│   │  [隧道名].logs
-│   │
-│   └───Pictures
+│   └───[隧道名].log
 │
-```
-
-## 3.示例代码
-
-```csharp
-using System.IO;
-
-public static class Paths
-{
-    public static readonly string DataPath =
-        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "ChmlFrp");
-
-    public static readonly string IniPath = Path.Combine(DataPath, "Inis");
-    public static readonly string LogPath = Path.Combine(DataPath, "Logs");
-    public static readonly string FrpExePath = Path.Combine(DataPath, "frpc.exe");
-    public static readonly string PicturesPath = Path.Combine(DataPath, "Pictures");
-    public static readonly string LogfilePath = Path.Combine(DataPath, "Debug-[启动器缩写].logs");
-}
 ```
