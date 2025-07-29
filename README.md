@@ -7,11 +7,7 @@
 
 3.账号不在 https://all.chmlfrp.com/blacklist 当中
 
-4.没有对CHMLFRP有过损害行为
-
-5.遵守以上规则
-
-6.要求代码开源
+4.要求代码开源
 
 ## 2.用户数据存储位置
 我们要求启动器对用户数据需统一存储至注册表
@@ -36,86 +32,3 @@
 | username  | 字符串值  | 用户名  |
 | usertoken  | 字符串值  | 用户token  |
 
-## 2.示例代码
-
-```python
-import winreg
-
-class User:
-    key_path = r"SOFTWARE\ChmlFrp"
-    key = winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path)
-
-    username = None
-    password = None
-    usertoken = None
-
-    @staticmethod
-    def load():
-        try:
-            with winreg.OpenKey(winreg.HKEY_CURRENT_USER, User.key_path) as key:
-                User.username = winreg.QueryValueEx(key, "username")[0]
-                User.password = winreg.QueryValueEx(key, "password")[0]
-                User.usertoken = winreg.QueryValueEx(key, "usertoken")[0]
-        except FileNotFoundError:
-            User.username = None
-            User.password = None
-            User.usertoken = None
-
-    @staticmethod
-    def save(username, password, usertoken):
-        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, User.key_path, 0, winreg.KEY_WRITE) as key:
-            winreg.SetValueEx(key, "username", 0, winreg.REG_SZ, username)
-            winreg.SetValueEx(key, "password", 0, winreg.REG_SZ, password)
-            winreg.SetValueEx(key, "usertoken", 0, winreg.REG_SZ, usertoken)
-        User.load()
-```
-
-```csharp
-using Microsoft.Win32;
-
-public static class User
-{
-    private static readonly RegistryKey Key =
-        Registry.CurrentUser.CreateSubKey(@"SOFTWARE\\ChmlFrp", true);
-    public static string Username;
-    public static string Password;
-    public static string Usertoken;
-
-    static User()
-    {
-        Load();
-    }
-
-    private static void Load()
-    {
-        Username = Key.GetValue("username")?.ToString();
-        Password = Key.GetValue("password")?.ToString();
-        Usertoken = Key.GetValue("usertoken")?.ToString();
-    }
-
-    public static void Save(string username, string password, string usertoken)
-    {
-        Key.SetValue("username", username);
-        Key.SetValue("password", password);
-        Key.SetValue("usertoken", usertoken);
-        Load();
-    }
-}
-```
-
-## 3.启动配置文件存储位置
-我们要求启动器对启动配置文件需统一存储至用户文件夹
-
-文件夹位置：
-```
-C:\Users\[用户名]\AppData\Roaming\ChmlFrp
-```
-
-文件树：
-```
-├───ChmlFrp
-│   ├───Debug-[启动器缩写].log
-│   ├───frpc.exe
-│   └───[隧道名].log
-│
-```
